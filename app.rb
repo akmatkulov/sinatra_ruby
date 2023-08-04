@@ -5,6 +5,25 @@ get '/' do
   erb :index
 end
 
+get '/admin' do
+  erb :admin
+end
+
+post '/admin' do
+  @login = params['login']
+  @password = params['pass']
+
+  if @login == 'admin' && @password == 'secret'
+    @message = File.read('users.txt')
+    @title = 'Textfile'
+    erb :message
+  else
+    @title = "Access denied"
+    @message = "Try at later"
+    erb :message
+  end
+end
+
 #Отправить данные
 post '/' do
   @name = params['name']
@@ -19,5 +38,4 @@ post '/' do
   f.close
 
   erb :message
-
 end
